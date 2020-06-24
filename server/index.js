@@ -1,7 +1,11 @@
 const express = require('express');
+var cors = require('cors');
 const app = express();
 const helmet = require('helmet');
 const axios = require('axios').default;
+
+// allow cross origin for development;
+app.use(cors());
 
 const port = process.env.PORT || 3000;
 
@@ -20,7 +24,7 @@ app.get('/users', (req, res) => {
     });
 });
 
-app.get('/city-users/:city', (req, res) => {
+app.get('/city/:city/users', (req, res) => {
   axios.get(`${apiBase}/city/${req.params.city}/users`)
     .then(results => {
       const inRadius = results.data.filter(item => {
@@ -40,7 +44,7 @@ app.get('/city-users/:city', (req, res) => {
     });
 });
 
-//app.use('/', express.static('./build'));
+app.use(express.static('./build'));
 
 /* catch all */
 app.get('*', (req, res) => {
