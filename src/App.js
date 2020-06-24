@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { getUsers } from './api';
 
 function App() {
+  const [ usersInRadius, setUsersInRadius ] = useState([]);
+  const handleApiError = () => {};
+
+  const getUserData = async () => {
+   const users = await getUsers();
+    console.log({users});
+    if( users.error ) 
+      handleApiError(users.error);
+    else
+      setUsersInRadius(users);
+};
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    getUserData()
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      { usersInRadius.map(user => {
+        return (<div>{user.first_name}</div>);
+      }) }
     </div>
   );
 }
