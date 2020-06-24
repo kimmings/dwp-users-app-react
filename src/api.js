@@ -1,7 +1,7 @@
 import axios from 'axios';
 import haversine from './haversine';
 
-export const apiBase = 'https://bpdts-test-app.herokuapp.com';
+export const apiBase = '/api';
 export const london = {
   latitude: 51.5074,
   longitude: 0.1278,
