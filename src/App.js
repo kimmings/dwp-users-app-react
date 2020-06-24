@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
       { usersInRadius.map(user => {
-        return (<div>{user.first_name}</div>);
+        return (<div>{user.first_name} {user.last_name}</div>);
       }) }
     </div>
   );
