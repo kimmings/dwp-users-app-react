@@ -10,6 +10,7 @@ export const london = {
 
 /* very simple in memory cache */
 let usersInRadius = [];
+let usersInLondon = [];
 
 export const getUsers = async () => {
   try {
@@ -22,6 +23,18 @@ export const getUsers = async () => {
     });
     usersInRadius = inRadius;
     return inRadius;
+  } catch(error) {
+      console.log(error);
+      return { error };
+  };
+};
+
+export const getLondonUsers = async () => {
+  try {
+    if(usersInLondon.length) return usersInLondon;
+
+    const { data } = await axios.get(`${apiBase}/city/London/users`);
+    return data;
   } catch(error) {
       console.log(error);
       return { error };

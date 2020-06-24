@@ -15,8 +15,8 @@ app.use(helmet());
 app.get('/users', (req, res) => {
   console.log('get users');
   axios.get(`${apiBase}/users`)
-    .then(results => {
-      res.send(results.data);
+    .then(({ data }) => {
+      res.send(data);
     })
     .catch(error => {
       console.log(error);
@@ -26,17 +26,8 @@ app.get('/users', (req, res) => {
 
 app.get('/city/:city/users', (req, res) => {
   axios.get(`${apiBase}/city/${req.params.city}/users`)
-    .then(results => {
-      const inRadius = results.data.filter(item => {
-        const distance = haversine(item.latitude, item.longitude, london.latitude, london.longitude, 'M');
-        return distance < london.radius + 50;
-      });
-
-      let str = '';
-      for(var i=0; i<inRadius.length; i++) {
-        str += `${inRadius[i].longitude}, ${inRadius[i].latitude}\n`;
-      }
-      res.send(str);
+    .then( ({ data }) => {
+      res.send(data);
     })
     .catch(error => {
       console.log('error', error);
