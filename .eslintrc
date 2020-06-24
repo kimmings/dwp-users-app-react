@@ -1,0 +1,36 @@
+{
+    "extends": [ "react-app"],
+    "plugins": [
+        "prettier",
+    ],
+    "globals": {
+        "__DEV__": "readonly"
+    },
+    "rules": {
+        "prettier/prettier": "error",
+        "keyword-spacing": ["error", { "before": true, "after": true }],
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "react/forbid-foreign-prop-types": off
+    }
+}
