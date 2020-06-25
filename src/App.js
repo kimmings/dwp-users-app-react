@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
-import { getUsers, getLondonUsers } from './api';
+import Header from './components/Header';
+import { getUsers, getLondonUsers } from './lib/api';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+const StyledButton = styled(Button)`
+  width: 100%;
+  border-radius: 0;
+  border-top: 1px solid white;
+  border-top: 1px solid white;
+
+  @media (min-width: 784px) {
+    width: auto;
+    border-radius: 5px;
+  }
+`;
 
 function App() {
   const [ usersInLondon, setUsersInLondon ] = useState([]);
   const [ usersInRadius, setUsersInRadius ] = useState([]);
+  const [ showUsersInLondon, setShowUsersInLondon ] = useState(true);
+
   const handleApiError = () => {};
 
   const getUsersInRadius = async () => {
    const users = await getUsers();
-    console.log({users});
     if( users.error ) 
       handleApiError(users.error);
     else
@@ -26,14 +39,18 @@ function App() {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    getUsersInRadius()
+    getLondonUsers().then(users => {
+      setUsersInLondon(users);
+      getUsersInRadius();
+    });
   }, []);
 
   return (
     <div className="App">
+      <Header />
       <div>
-      <Button variant="secondary" onClick={getUsersInLondon}>Display Users within 50 miles of London</Button>
-      <Button variant="secondary" onClick={getUsersInRadius}>Display London Users</Button>
+        <StyledButton variant="primary" onClick={getUsersInLondon}>Display Users within 50 miles of London</StyledButton>
+        <StyledButton variant="primary" onClick={getUsersInRadius}>Display London Users</StyledButton>
       </div>
       <div>
         { usersInRadius.map(user => {
