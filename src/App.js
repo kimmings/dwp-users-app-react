@@ -13,33 +13,47 @@ function App() {
   const [showUsersInLondon, setShowUsersInLondon] = useState(false);
   const [showUsersInRadius, setShowUsersInRadius] = useState(false);
   const [displayError, setDisplayError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleApiError = (error) => {
     console.log(error);
     setDisplayError(true);
+    setLoading(false);
   };
 
   const getUsersInRadius = async () => {
     const users = await getUsers();
-    if (users.error) handleApiError(users.error);
-    else setUsers(users);
+    if (users.error) {
+      handleApiError(users.error);
+    } else {
+      setUsers(users);
+      setLoading(false);
+    }
   };
 
   const getUsersInLondon = async () => {
     const users = await getLondonUsers();
-    if (users.error) handleApiError(users.error);
-    else setUsers(users);
+    if (users.error) {
+      handleApiError(users.error);
+    } else {
+      setUsers(users);
+      setLoading(false);
+    }
   };
 
   const displayUsersInRadius = () => {
     setShowUsersInLondon(false);
     setShowUsersInRadius(true);
+    setLoading(true);
+    setUsers([]);
     getUsersInRadius();
   };
 
   const displayUsersInLondon = () => {
     setShowUsersInLondon(true);
     setShowUsersInRadius(false);
+    setLoading(true);
+    setUsers([]);
     getUsersInLondon();
   };
 
@@ -70,6 +84,8 @@ function App() {
             {displayError && (
               <NetworkError>Oops! There was a Network Error</NetworkError>
             )}
+
+            {loading && <p>Loading data...</p>}
 
             <Table data={users} />
           </Col>
