@@ -1,6 +1,7 @@
 # DWP 
 
-1. Create an API and front end to query `https://bpdts-test-app.herokuapp.com` and display all users living within London.
-2. Query and display all users living within a 50 mile radius of London.
+- [x] Create an API and front end to query `https://bpdts-test-app.herokuapp.com` 
+- [x] Display all users living within London.
+- [x] Display all users living within a 50 mile radius of London.
 
 
