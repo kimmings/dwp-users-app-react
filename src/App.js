@@ -67,9 +67,9 @@ function App() {
         </Row>
         <Row>
           <Col className="px-0 pt-2">
-            <NetworkError show={displayError}>
-              Oops! There was a Network Error
-            </NetworkError>
+            {displayError && (
+              <NetworkError>Oops! There was a Network Error</NetworkError>
+            )}
 
             <Table data={users} />
           </Col>
