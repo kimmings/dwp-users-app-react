@@ -9,7 +9,7 @@ describe('API', () => {
         .replyWithError({ message: 'there was an error' });
 
       const results = await getUsers();
-      expect(results.error.message).toEqual('there was an error');
+      expect(results.error.message).toEqual('there was a network error');
     });
 
     it('should return empty array if no users found within area', async () => {
