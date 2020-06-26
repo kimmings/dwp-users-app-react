@@ -6,7 +6,7 @@ describe('API', () => {
     it('should return error if one is thrown', async () => {
       nock(apiBase)
         .get('/users')
-        .replyWithError({ message: 'there was an error' });
+        .replyWithError({ message: 'there was a network error' });
 
       const results = await getUsers();
       expect(results.error.message).toEqual('there was a network error');
