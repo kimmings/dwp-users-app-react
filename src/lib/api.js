@@ -14,29 +14,35 @@ let usersInLondon = [];
 
 export const getUsers = async () => {
   try {
-    if(usersInRadius.length) return usersInRadius;
+    if (usersInRadius.length) return usersInRadius;
 
     const results = await axios.get(`${apiBase}/users`);
-    const inRadius = results.data.filter(item => {
-      const distance = haversine(item.latitude, item.longitude, london.latitude, london.longitude, 'M');
+    const inRadius = results.data.filter((item) => {
+      const distance = haversine(
+        item.latitude,
+        item.longitude,
+        london.latitude,
+        london.longitude,
+        'M'
+      );
       return distance < london.radius + 50;
     });
     usersInRadius = inRadius;
     return inRadius;
-  } catch(error) {
-      console.log(error);
-      return { error };
-  };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
 };
 
 export const getLondonUsers = async () => {
   try {
-    if(usersInLondon.length) return usersInLondon;
+    if (usersInLondon.length) return usersInLondon;
 
     const { data } = await axios.get(`${apiBase}/city/London/users`);
     return data;
-  } catch(error) {
-      console.log(error);
-      return { error };
-  };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
 };
