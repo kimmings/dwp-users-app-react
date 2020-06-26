@@ -16,11 +16,10 @@ export const StyledHeader = styled(Navbar)`
 `;
 
 export const NetworkError = styled.p`
-  display: ${ ({ show }) => show? 'block': 'none' };
+  display: ${({ show }) => (show ? 'block' : 'none')};
   font-size: 20px;
   font-family: 'Courier',
   color: red;
   padding: 20px;
   border: 1px solid red;
 `;
-
