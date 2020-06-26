@@ -1,86 +1,81 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import Table from './components/Table';
 import { StyledButton, NetworkError } from './components/Styled';
 import Header from './components/Header';
 import { getUsers, getLondonUsers } from './lib/api';
 
 function App() {
-  const [ usersInLondon, setUsersInLondon ] = useState([]);
-  const [ usersInRadius, setUsersInRadius ] = useState([]);
-  const [ showUsersInLondon, setShowUsersInLondon ] = useState(true);
-  const [ showUsersInRadius, setShowUsersInRadius ] = useState(false);
-  const [ displayError, setDisplayError ] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [showUsersInLondon, setShowUsersInLondon] = useState(false);
+  const [showUsersInRadius, setShowUsersInRadius] = useState(false);
+  const [displayError, setDisplayError] = useState(false);
 
-  const handleApiError = error => {
+  const handleApiError = (error) => {
     console.log(error);
     setDisplayError(true);
   };
 
   const getUsersInRadius = async () => {
     const users = await getUsers();
-    if( users.error ) 
-      handleApiError(users.error);
-    else
-      setUsersInRadius(users);
+    if (users.error) handleApiError(users.error);
+    else setUsers(users);
   };
 
   const getUsersInLondon = async () => {
     const users = await getLondonUsers();
-    if( users.error )
-      handleApiError(users.error);
-    else
-      setUsersInLondon(users);
+    if (users.error) handleApiError(users.error);
+    else setUsers(users);
   };
 
   const displayUsersInRadius = () => {
     setShowUsersInLondon(false);
     setShowUsersInRadius(true);
+    getUsersInRadius();
   };
 
   const displayUsersInLondon = () => {
     setShowUsersInLondon(true);
-    setShowUsersInRadius(false);   
+    setShowUsersInRadius(false);
+    getUsersInLondon();
   };
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    getUsersInLondon();
-    getUsersInRadius();
-  }, []);
-
   return (
-    <div className="App">
+    <React.Fragment>
       <Header />
       <Container fluid>
         <Row>
-          <Col sm={4} className="px-0 pr-sm-2">
-            <StyledButton 
+          <Col xs={12} sm={6} className="px-0">
+            <StyledButton
               selected={showUsersInRadius}
-              onClick={displayUsersInRadius}>Display Users within 50 miles of London</StyledButton>
-            <StyledButton 
-              selected={showUsersInLondon}
-              onClick={displayUsersInLondon}>Display London Users</StyledButton>
+              onClick={displayUsersInRadius}
+            >
+              Users Near London
+            </StyledButton>
           </Col>
-          <Col sm={8}>
-            <NetworkError 
-              show={displayError}>Oops! There was a Network Error</NetworkError>
-            { showUsersInRadius &&
-                usersInRadius.map(user => {
-                  return (<div>{user.first_name} {user.last_name}</div>);
-                }) 
-            }
-            { showUsersInLondon && 
-                usersInLondon.map(user => {
-                  return (<div>{user.first_name} {user.last_name}</div>);
-                }) 
-            }
+          <Col xs={12} sm={6} className="px-0">
+            <StyledButton
+              selected={showUsersInLondon}
+              onClick={displayUsersInLondon}
+            >
+              London Users
+            </StyledButton>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="px-0 pt-2">
+            <NetworkError show={displayError}>
+              Oops! There was a Network Error
+            </NetworkError>
+
+            <Table data={users} />
           </Col>
         </Row>
       </Container>
-    </div>
+    </React.Fragment>
   );
 }
 
