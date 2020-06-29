@@ -13,7 +13,6 @@ const apiBase = 'https://bpdts-test-app.herokuapp.com';
 app.use(helmet());
 
 app.get('/users', (req, res) => {
-  console.log('get users');
   axios
     .get(`${apiBase}/users`)
     .then(({ data }) => {
