@@ -4,14 +4,20 @@
 - [x] Display all users living within London.
 - [x] Display all users living within a 50 mile radius of Greater London.
 
+## Requirements
+
+This application runs on Heroku and while it is possible to run the application without installing the Heroku CLI it is recommended you do so (https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up).
+
 ## Commands
 
-- starting local server - `heroku local web`
+- install dependencies - `npm install`
+- builing and starting local server - `heroku local web`
+- running react app standalone - `npm start`
 - unit tests - `npm run test`
 - cypress testing - ensure you're running the app locally and then run `npm run e2e`
 
 
-## App Location
+## Remote App Location
 
 https://guarded-sierra-30890.herokuapp.com
 
