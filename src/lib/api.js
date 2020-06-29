@@ -40,6 +40,7 @@ export const getLondonUsers = async () => {
     if (usersInLondon.length) return usersInLondon;
 
     const { data } = await axios.get(`${apiBase}/city/London/users`);
+    usersInLondon = data;
     return data;
   } catch (error) {
     console.log(error);
