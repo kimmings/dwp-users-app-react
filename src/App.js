@@ -85,7 +85,7 @@ function App() {
               <NetworkError>Oops! There was a Network Error</NetworkError>
             )}
 
-            {loading && <p>Loading data...</p>}
+            {loading && <p align="center">Loading data...</p>}
 
             <Table data={users} />
           </Col>
